@@ -2,7 +2,7 @@ import { Locator, Page, expect } from "@playwright/test";
 import { toolbarSelectors } from "../selectors/toolBarSelectors";
 
 export class ToolBarPage {
-  protected readonly page: Page;
+  private readonly page: Page;
   private readonly addTaskButton: Locator;
   private readonly completeAllTasksButton: Locator;
   private readonly clearCompletedTasksButton: Locator;
