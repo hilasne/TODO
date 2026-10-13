@@ -1,10 +1,8 @@
-import { Locator, Page, expect } from "@playwright/test";
+import { Locator, expect } from "@playwright/test";
 import { singleTaskSelectors } from "../selectors/singleTaskSelectors";
 import { CategoryOptions, DueDateOptions, PriorityOptions } from "../types/task";
 
 export class SingleTaskPage {
-  private readonly page: Page;
-  private readonly singleTask: Locator;
   private readonly taskName: Locator;
   private readonly taskCategory: Locator;
   private readonly taskPriority: Locator;
@@ -13,16 +11,14 @@ export class SingleTaskPage {
   private readonly editTaskButton: Locator;
   private readonly deleteTaskButton: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
-    this.singleTask = this.page.locator(singleTaskSelectors.singleTask);
-    this.taskName = this.singleTask.locator(singleTaskSelectors.taskName);
-    this.taskCategory = this.singleTask.locator(singleTaskSelectors.taskCategory);
-    this.taskPriority = this.singleTask.locator(singleTaskSelectors.taskPriority);
-    this.taskDueDate = this.singleTask.locator(singleTaskSelectors.taskDueDate);
-    this.taskCheckbox = this.singleTask.locator(singleTaskSelectors.taskCheckbox);
-    this.editTaskButton = this.singleTask.locator(singleTaskSelectors.editTaskButton);
-    this.deleteTaskButton = this.singleTask.locator(singleTaskSelectors.deleteTaskButton);
+  constructor(protected readonly singleTask: Locator) {
+    this.taskName = singleTask.locator(singleTaskSelectors.taskName);
+    this.taskCategory = singleTask.locator(singleTaskSelectors.taskCategory);
+    this.taskPriority = singleTask.locator(singleTaskSelectors.taskPriority);
+    this.taskDueDate = singleTask.locator(singleTaskSelectors.taskDueDate);
+    this.taskCheckbox = singleTask.locator(singleTaskSelectors.taskCheckbox);
+    this.editTaskButton = singleTask.locator(singleTaskSelectors.editTaskButton);
+    this.deleteTaskButton = singleTask.locator(singleTaskSelectors.deleteTaskButton);
   }
 
   async clickEditTask() {
