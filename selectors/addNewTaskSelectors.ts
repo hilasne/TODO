@@ -9,7 +9,7 @@ export const addNewTaskSelectors = {
   closeModalButton: "[data-test-name='close-modal-button']",
 
   // ERROR MESSAGE
-  closeModalButton: "[data-test-name='close-modal-button']",
-  closeModalButton: "[data-test-name='close-modal-button']",
-  closeModalButton: "[data-test-name='close-modal-button']",
+  errorName: "[data-test-name='error-name']",
+  errorCategory: "[data-test-name='error-category']",
+  errorDueDate: "[data-test-name='error-dueDate']",
 };

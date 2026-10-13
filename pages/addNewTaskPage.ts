@@ -25,6 +25,10 @@ export class AddNewTaskPage {
     this.cancelButton = this.taskModal.locator(addNewTaskSelectors.cancelButton);
     this.saveButton = this.taskModal.locator(addNewTaskSelectors.saveButton);
     this.closeModalButton = this.taskModal.locator(addNewTaskSelectors.closeModalButton);
+
+    this.errorName = this.taskModal.locator(addNewTaskSelectors.errorName);
+    this.errorCategory = this.taskModal.locator(addNewTaskSelectors.errorCategory);
+    this.errorDueDate = this.taskModal.locator(addNewTaskSelectors.errorDueDate);
   }
 
   async enterTaskName(taskName: string) {
@@ -57,5 +61,17 @@ export class AddNewTaskPage {
 
   async expectTaskModalToBeVisible(visible: boolean = true) {
     await expect(this.taskModal).toBeVisible({ visible });
+  }
+
+  async expectNameError(visible: boolean = true) {
+    await expect(this.errorName).toBeVisible({ visible });
+  }
+
+  async expectCategoryError(visible: boolean = true) {
+    await expect(this.errorCategory).toBeVisible({ visible });
+  }
+
+  async expectDueDateError(visible: boolean = true) {
+    await expect(this.errorDueDate).toBeVisible({ visible });
   }
 }
