@@ -59,6 +59,8 @@ export class AddNewTaskPage {
     await this.closeModalButton.click();
   }
 
+  // Expect Methods
+
   async expectTaskModalToBeVisible(visible: boolean = true) {
     await expect(this.taskModal).toBeVisible({ visible });
   }

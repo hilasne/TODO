@@ -2,11 +2,7 @@ import { Locator, Page, expect } from "@playwright/test";
 import { toolbarSelectors } from "../selectors/toolBarSelectors";
 
 export class ToolBarPage {
-<<<<<<< HEAD
   private readonly page: Page;
-=======
-  protected readonly page: Page;
->>>>>>> 26ee7e6eb0ffbf2e256d8340a924cc3bb5985526
   private readonly addTaskButton: Locator;
   private readonly completeAllTasksButton: Locator;
   private readonly clearCompletedTasksButton: Locator;
@@ -32,7 +28,17 @@ export class ToolBarPage {
     await this.clearCompletedTasksButton.click();
   }
 
+  // Expect Methods
+  
   async expectTasksLeftToBe(expectedNumber: number): Promise<void> {
     expect(this.tasksLeftNumber.innerText()).toEqual(expectedNumber);
+  }
+
+  async expectCompleteTasksButtonToBeDisabled() {
+    expect(this.completeAllTasksButton).toHaveAttribute("disabled");
+  }
+
+  async expectClearTasksButtonToBeDisabled() {
+    expect(this.clearCompletedTasksButton).toHaveAttribute("disabled");
   }
 }
