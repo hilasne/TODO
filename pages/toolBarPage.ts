@@ -29,7 +29,7 @@ export class ToolBarPage {
   }
 
   // Expect Methods
-  
+
   async expectTasksLeftToBe(expectedNumber: number): Promise<void> {
     expect(this.tasksLeftNumber.innerText()).toEqual(expectedNumber);
   }
