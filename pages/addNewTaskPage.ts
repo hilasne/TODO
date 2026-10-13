@@ -1,5 +1,6 @@
 import { Locator, Page, expect } from "@playwright/test";
 import { addNewTaskSelectors } from "../selectors/addNewTaskSelectors";
+import { CategoryOptions, PriorityOptions } from "../types/task";
 
 export class AddNewTaskPage {
   private readonly page: Page;
@@ -35,11 +36,11 @@ export class AddNewTaskPage {
     await this.taskNameInput.fill(taskName);
   }
 
-  async selectCategory(option: string) {
+  async selectCategory(option: CategoryOptions) {
     await this.categorySelect.selectOption({ value: option });
   }
 
-  async selectPriority(priority: string) {
+  async selectPriority(priority: PriorityOptions) {
     await this.prioritySelect.selectOption({ value: priority });
   }
 
