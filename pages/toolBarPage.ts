@@ -31,14 +31,14 @@ export class ToolBarPage {
   // Expect Methods
 
   async expectTasksLeftToBe(expectedNumber: number): Promise<void> {
-    expect(this.tasksLeftNumber.innerText()).toEqual(expectedNumber);
+    await expect(this.tasksLeftNumber).toHaveText(expectedNumber.toString());
   }
 
-  async expectCompleteTasksButtonToBeDisabled() {
-    expect(this.completeAllTasksButton).toHaveAttribute("disabled");
-  }
+  async expectCompleteAllButtonEnabled(isEnabled: boolean): Promise<void> {
+  await expect(this.completeAllTasksButton).toBeEnabled({ enabled: isEnabled });
+}
 
-  async expectClearTasksButtonToBeDisabled() {
-    expect(this.clearCompletedTasksButton).toHaveAttribute("disabled");
-  }
+  async expectClearTasksButtonEnabled(isEnabled: boolean): Promise<void> {
+  await expect(this.clearCompletedTasksButton).toBeEnabled({ enabled: isEnabled });
+}
 }
