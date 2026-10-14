@@ -13,12 +13,13 @@
     "test:file": "npx playwright test tests/example.spec.ts",
     "test:parallel": "npx playwright test --workers=4",
     "test:serial": "npx playwright test --workers=1",
-    "typecheck" : "npx tsc --noEmit"
+    "typecheck": "npx tsc --noEmit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^10.6.0",
     "@playwright/test": "^1.54.1",
     "@types/node": "^24.0.14",
     "prettier": "^3.9.10"

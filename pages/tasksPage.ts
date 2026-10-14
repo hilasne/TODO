@@ -15,9 +15,7 @@ export class TasksPage {
   }
 
   getSingleTaskPageByName(name: string): SingleTaskPage {
-    const row = this.taskRows.filter({ hasText: name });
-
-    return new SingleTaskPage(row);
+    return new SingleTaskPage(this.page, name);
   }
 
   // Expect Methods
