@@ -1,6 +1,6 @@
 import { Locator, expect, Page } from "@playwright/test";
 import { singleTaskSelectors } from "../selectors/singleTaskSelectors";
-import { CategoryOptions, DueDateOptions, PriorityOptions } from "../Helpers/types/taskDetails";
+import { CategoryOptions, DueDateOptions, PriorityOptions } from "../Helpers/taskDetails";
 
 export class SingleTaskPage {
   private readonly page: Page;
@@ -25,6 +25,10 @@ export class SingleTaskPage {
     this.taskCheckbox = this.singleTask.locator(singleTaskSelectors.taskCheckbox);
     this.editTaskButton = this.singleTask.locator(singleTaskSelectors.editTaskButton);
     this.deleteTaskButton = this.singleTask.locator(singleTaskSelectors.deleteTaskButton);
+  }
+
+  async checkTask() {
+    await this.taskCheckbox.click();
   }
 
   async clickEditTask() {

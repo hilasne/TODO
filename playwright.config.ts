@@ -21,6 +21,7 @@ export default defineConfig({
     navigationTimeout: 30 * 1000,
 
     baseURL: "http://localhost:3000",
+    extraHTTPHeaders: { Accept: 'application/json' },
 
     headless: false,
     viewport: null,
