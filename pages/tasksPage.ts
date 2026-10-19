@@ -26,8 +26,8 @@ export class TasksPage {
     }
   }
 
-  async expectEmptyStateAlert() {
-    await expect(this.emptyStateAlert).toBeVisible();
+  async expectEmptyStateAlert(isVisible: boolean = true) {
+    await expect(this.emptyStateAlert).toBeVisible({visible: isVisible});
   }
 
   async expectTasksAmountToBe(expected: number) {

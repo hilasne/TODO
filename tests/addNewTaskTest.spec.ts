@@ -1,14 +1,13 @@
 import { test } from "../fixtures/addTaskFixture";
 import { AddNewTaskPage } from "../pages/addNewTaskPage";
-import { SingleTaskPage } from "../pages/singleTaskPage";
-import { randomNumber, isoDateFromDay } from "../Helpers/testDataHelpers";
+import { randomNumber, isoDateFromToday } from "../Helpers/testDataHelpers";
 import { CategoryOptions, PriorityOptions, randomCategory, randomPriority } from "../Helpers/taskDetails";
 
-const date: string = isoDateFromDay(randomNumber());
+const date: string = isoDateFromToday(randomNumber());
 const category: CategoryOptions = randomCategory();
 const priority: PriorityOptions = randomPriority();
 
-test("add new task", async ({ page, tasksPage, toolBarPage, getSingleTaskPageAndName, cleanTasks }) => {
+test("add new task", async ({ openApp, page, tasksPage, toolBarPage, getSingleTaskPageAndName }) => {
   const { singleTaskName, singleTaskPage } = getSingleTaskPageAndName;
   const addTaskPage = new AddNewTaskPage(page);
 
@@ -19,16 +18,17 @@ test("add new task", async ({ page, tasksPage, toolBarPage, getSingleTaskPageAnd
   await addTaskPage.selectPriority(priority);
   await addTaskPage.clickSave();
 
-  toolBarPage.expectTasksLeftToBe(1);
-  tasksPage.expectTasksAmountToBe(1);
-  singleTaskPage.expectTaskCategoryToBe(category);
-  singleTaskPage.expectTaskNameToBe(singleTaskName);
-  singleTaskPage.expectTaskDueDateToBe(date);
-  singleTaskPage.expectTaskPriorityToBe(priority);
-  singleTaskPage.expectTaskIsChecked(false);
+  await toolBarPage.expectTasksLeftToBe(1);
+  await tasksPage.expectTasksAmountToBe(1);
+  await singleTaskPage.expectTaskCategoryToBe(category);
+  await singleTaskPage.expectTaskNameToBe(singleTaskName);
+  await singleTaskPage.expectTaskDueDateToBe(date);
+  await singleTaskPage.expectTaskPriorityToBe(priority);
+  await singleTaskPage.expectTaskIsChecked(false);
+  await tasksPage.expectEmptyStateAlert(false);
 });
 
-test("cancel add new task", async ({ page, tasksPage, toolBarPage, getSingleTaskPageAndName, cleanTasks }) => {
+test("cancel add new task", async ({ openApp, page, tasksPage, toolBarPage, getSingleTaskPageAndName }) => {
   const { singleTaskName } = getSingleTaskPageAndName;
   const addTaskPage = new AddNewTaskPage(page);
 
@@ -39,11 +39,28 @@ test("cancel add new task", async ({ page, tasksPage, toolBarPage, getSingleTask
   await addTaskPage.selectPriority(priority);
   await addTaskPage.clickCancel();
 
-  toolBarPage.expectTasksLeftToBe(0);
-  tasksPage.expectTasksAmountToBe(0);
+  await toolBarPage.expectTasksLeftToBe(0);
+  await tasksPage.expectTasksAmountToBe(0);
+  await tasksPage.expectEmptyStateAlert();
 });
 
-test("negative, add empty task", async ({ page, cleanTasks, tasksPage, toolBarPage }) => {
+test("click close new task modal", async ({ openApp, page, tasksPage, toolBarPage, getSingleTaskPageAndName }) => {
+  const { singleTaskName } = getSingleTaskPageAndName;
+  const addTaskPage = new AddNewTaskPage(page);
+
+  await toolBarPage.clickAddTask();
+  await addTaskPage.enterTaskName(singleTaskName);
+  await addTaskPage.enterDueDate(date);
+  await addTaskPage.selectCategory(category);
+  await addTaskPage.selectPriority(priority);
+  await addTaskPage.closeModal();
+
+  toolBarPage.expectTasksLeftToBe(0);
+  tasksPage.expectTasksAmountToBe(0);
+  tasksPage.expectEmptyStateAlert();
+});
+
+test("negative, add empty task", async ({ openApp, page, tasksPage, toolBarPage }) => {
   const addTaskPage = new AddNewTaskPage(page);
 
   await toolBarPage.clickAddTask();

@@ -2,7 +2,7 @@ import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
   fullyParallel: true,
-  workers: 2,
+  workers: 1,
   retries: 0,
   testDir: "./tests",
   reporter: "html",

@@ -4,7 +4,7 @@ export function randomNumber(min = -100, max = 100): number {
   return (faker.number.int({ min, max }));
 }
 
-export function isoDateFromDay(daysFromToday: number = 0): string {
+export function isoDateFromToday(daysFromToday: number = 0): string {
   const d = new Date();
   d.setDate(d.getDate() + daysFromToday);
   const y = d.getFullYear();
