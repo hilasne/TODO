@@ -1,6 +1,6 @@
 import { test } from "../support/taskFixture";
-import { AddNewTaskPage } from "../pages/addNewTaskPage";
-import { SingleTaskPage } from "../pages/singleTaskPage";
+import { AddNewTaskPage } from "../support/pages/addNewTaskPage";
+import { SingleTaskPage } from "../support/pages/singleTaskPage";
 import { randomNumber, isoDateFromToday } from "../support/Helpers/testDataHelpers";
 import {
   CategoryOptions,

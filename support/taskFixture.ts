@@ -1,12 +1,13 @@
 import { test as base } from "@playwright/test";
-import { TasksPage } from "../pages/tasksPage";
-import { ToolBarPage } from "../pages/toolBarPage";
-import { SingleTaskPage } from "../pages/singleTaskPage";
+import { TasksPage } from "../support/pages/tasksPage";
+import { ToolBarPage } from "../support/pages/toolBarPage";
+import { SingleTaskPage } from "../support/pages/singleTaskPage";
 import { getTask, createTaskTitle, randomCategory, randomPriority } from "./Helpers/taskDetails";
 import { NewTask, TasksApi } from "./api/tasksApi";
 import { isoDateFromToday, randomNumber } from "./Helpers/testDataHelpers";
 
 type TestFixtures = {
+  // API
   tasksApi: TasksApi;
   cleanTasks: void;
   createTask: string;
@@ -14,15 +15,17 @@ type TestFixtures = {
   createTaskWithOverdueDueDate: string;
   createTwoTasks: string;
   completeTwoTasks: void;
-  openApp: void;
 
-  // Pages
+  // UI
+  openApp: void;
   tasksPage: TasksPage;
   toolBarPage: ToolBarPage;
   getSingleTaskPageAndName: { singleTaskPage: SingleTaskPage; singleTaskName: string };
 };
 
 export const test = base.extend<TestFixtures>({
+  // API fixtures
+
   tasksApi: async ({ request }, use) => {
     await use(new TasksApi(request));
   },
@@ -65,12 +68,12 @@ export const test = base.extend<TestFixtures>({
     await use();
   },
 
+  // UI fixtures
+
   openApp: async ({ page, cleanTasks }, use) => {
     await page.goto("/");
     await use();
   },
-
-  // Page Fixtures
 
   tasksPage: async ({ page }, use) => {
     const tasksPage = new TasksPage(page);

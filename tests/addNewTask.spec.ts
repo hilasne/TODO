@@ -1,5 +1,5 @@
 import { test } from "../support/taskFixture";
-import { AddNewTaskPage } from "../pages/addNewTaskPage";
+import { AddNewTaskPage } from "../support/pages/addNewTaskPage";
 import { randomNumber, isoDateFromToday } from "../support/Helpers/testDataHelpers";
 import { CategoryOptions, PriorityOptions, randomCategory, randomPriority } from "../support/Helpers/taskDetails";
 

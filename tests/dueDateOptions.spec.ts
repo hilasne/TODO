@@ -1,5 +1,5 @@
 import { test } from "../support/taskFixture";
-import { SingleTaskPage } from "../pages/singleTaskPage";
+import { SingleTaskPage } from "../support/pages/singleTaskPage";
 
 test("validate today due date", async ({ createTaskWithTodayDueDate, openApp, page, toolBarPage }) => {
   const taskName = createTaskWithTodayDueDate;
