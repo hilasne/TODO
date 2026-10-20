@@ -39,8 +39,8 @@ export class SingleTaskPage {
     await this.deleteTaskButton.click();
   }
 
-  private formatDueDate(isoDate: string): string {
-    const [year, month, day] = isoDate.split("-").map(Number);
+  private formatDueDate(date: string): string {
+    const [year, month, day] = date.split("-").map(Number);
 
     return new Date(year, month - 1, day).toLocaleDateString("en-US", {
       month: "short",
@@ -63,12 +63,12 @@ export class SingleTaskPage {
     await expect(this.taskPriority).toHaveText(expectedPriority);
   }
 
-  async expectTaskDueDateToBe(expectedDueDate: string | DueDateOptions) {
-    await expect(this.taskDueDate).toContainText(this.formatDueDate(expectedDueDate));
-  }
-
-  async expectTaskOverdueOrToday(expectedCondition: DueDateOptions) {
-    await expect(this.taskDueDate).toContainText(expectedCondition);
+  async expectTaskDueDateToBe(expectedDueDate: string) {
+    if (expectedDueDate === "Today" || expectedDueDate === "Overdue") {
+      await expect(this.taskDueDate).toContainText(expectedDueDate);
+    } else {
+      await expect(this.taskDueDate).toContainText(this.formatDueDate(expectedDueDate));
+    }
   }
 
   async expectTaskIsChecked(isChecked: boolean = true) {

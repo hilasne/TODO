@@ -2,14 +2,18 @@ import { test as base } from "@playwright/test";
 import { TasksPage } from "../pages/tasksPage";
 import { ToolBarPage } from "../pages/toolBarPage";
 import { SingleTaskPage } from "../pages/singleTaskPage";
-import { createTaskTitle, randomCategory, randomPriority } from "../Helpers/taskDetails";
+import { getTask, createTaskTitle, randomCategory, randomPriority } from "../Helpers/taskDetails";
 import { NewTask, TasksApi } from "../api/tasksApi";
 import { isoDateFromToday, randomNumber } from "../Helpers/testDataHelpers";
 
 type TestFixtures = {
   tasksApi: TasksApi;
   cleanTasks: void;
-  createdTask: string;
+  createTask: string;
+  createTaskWithTodayDueDate: string;
+  createTaskWithOverdueDueDate: string;
+  createTwoTasks: string;
+  completeTwoTasks: void;
   openApp: void;
 
   // Pages
@@ -28,17 +32,37 @@ export const test = base.extend<TestFixtures>({
     await use();
   },
 
-  createdTask: async ({ tasksApi, cleanTasks }, use) => {
-    const task: NewTask = {
-      name: createTaskTitle(),
-      category: randomCategory(),
-      priority: randomPriority(),
-      dueDate: isoDateFromToday(randomNumber()),
-      completed: false,
-    };
+  createTask: async ({ tasksApi, cleanTasks }, use) => {
+    const task: NewTask = getTask(createTaskTitle(), randomCategory(), randomPriority(), randomNumber());
 
     await tasksApi.create(task);
     await use(task.name);
+  },
+
+  createTaskWithTodayDueDate: async ({ tasksApi, cleanTasks }, use) => {
+    const todayTask: NewTask = getTask(createTaskTitle(), randomCategory(), randomPriority(), 0);
+
+    await tasksApi.create(todayTask);
+    await use(todayTask.name);
+  },
+
+  createTaskWithOverdueDueDate: async ({ tasksApi, cleanTasks }, use) => {
+    const overdueTask: NewTask = getTask(createTaskTitle(), randomCategory(), randomPriority(), -1);
+
+    await tasksApi.create(overdueTask);
+    await use(overdueTask.name);
+  },
+
+  createTwoTasks: async ({ tasksApi, createTask }, use) => {
+    const secondtask: NewTask = getTask(createTaskTitle(), randomCategory(), randomPriority(), randomNumber());
+
+    await tasksApi.create(secondtask);
+    await use(secondtask.name);
+  },
+
+  completeTwoTasks: async ({ tasksApi, createTwoTasks }, use) => {
+    await tasksApi.completeAll();
+    await use();
   },
 
   openApp: async ({ page, cleanTasks }, use) => {
