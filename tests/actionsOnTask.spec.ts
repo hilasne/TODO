@@ -1,14 +1,14 @@
-import { test } from "../fixtures/addTaskFixture";
+import { test } from "../support/taskFixture";
 import { AddNewTaskPage } from "../pages/addNewTaskPage";
 import { SingleTaskPage } from "../pages/singleTaskPage";
-import { randomNumber, isoDateFromToday } from "../Helpers/testDataHelpers";
+import { randomNumber, isoDateFromToday } from "../support/Helpers/testDataHelpers";
 import {
   CategoryOptions,
   createTaskTitle,
   PriorityOptions,
   randomCategory,
   randomPriority,
-} from "../Helpers/taskDetails";
+} from "../support/Helpers/taskDetails";
 
 test("edit task", async ({ createTask, openApp, page, tasksPage }) => {
   const name: string = createTask;

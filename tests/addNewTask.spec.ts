@@ -1,7 +1,7 @@
-import { test } from "../fixtures/addTaskFixture";
+import { test } from "../support/taskFixture";
 import { AddNewTaskPage } from "../pages/addNewTaskPage";
-import { randomNumber, isoDateFromToday } from "../Helpers/testDataHelpers";
-import { CategoryOptions, PriorityOptions, randomCategory, randomPriority } from "../Helpers/taskDetails";
+import { randomNumber, isoDateFromToday } from "../support/Helpers/testDataHelpers";
+import { CategoryOptions, PriorityOptions, randomCategory, randomPriority } from "../support/Helpers/taskDetails";
 
 const date: string = isoDateFromToday(randomNumber());
 const category: CategoryOptions = randomCategory();

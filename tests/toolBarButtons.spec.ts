@@ -1,4 +1,4 @@
-import { test } from "../fixtures/addTaskFixture";
+import { test } from "../support/taskFixture";
 
 test("complete all tasks", async ({ createTwoTasks, openApp, toolBarPage }) => {
   await toolBarPage.expectTasksLeftToBe(2);

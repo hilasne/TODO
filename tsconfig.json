@@ -12,5 +12,5 @@
     "types": ["playwright"] 
   },
   
-  "include": ["tests", "pages", "utils", "fixtures", "playwright.config.ts"]
+  "include": ["tests", "pages", "utils", "fixtures", "playwright.config.ts", "support/taskFixture.ts"]
 }

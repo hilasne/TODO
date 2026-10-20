@@ -2,9 +2,9 @@ import { test as base } from "@playwright/test";
 import { TasksPage } from "../pages/tasksPage";
 import { ToolBarPage } from "../pages/toolBarPage";
 import { SingleTaskPage } from "../pages/singleTaskPage";
-import { getTask, createTaskTitle, randomCategory, randomPriority } from "../Helpers/taskDetails";
-import { NewTask, TasksApi } from "../api/tasksApi";
-import { isoDateFromToday, randomNumber } from "../Helpers/testDataHelpers";
+import { getTask, createTaskTitle, randomCategory, randomPriority } from "./Helpers/taskDetails";
+import { NewTask, TasksApi } from "./api/tasksApi";
+import { isoDateFromToday, randomNumber } from "./Helpers/testDataHelpers";
 
 type TestFixtures = {
   tasksApi: TasksApi;

@@ -1,4 +1,4 @@
-import { test } from "../fixtures/addTaskFixture";
+import { test } from "../support/taskFixture";
 import { SingleTaskPage } from "../pages/singleTaskPage";
 
 test("validate today due date", async ({ createTaskWithTodayDueDate, openApp, page, toolBarPage }) => {
@@ -14,4 +14,3 @@ test("validate overdue due date", async ({ createTaskWithOverdueDueDate, openApp
 
   await singleTaskPage.expectTaskDueDateToBe("Overdue");
 });
-

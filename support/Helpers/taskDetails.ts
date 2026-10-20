@@ -28,13 +28,13 @@ export function getTask(
   category: CategoryOptions,
   priority: PriorityOptions,
   daysFromDueDate: number,
-  completed: boolean = false
+  completed: boolean = false,
 ): NewTask {
   return {
     name: name,
     category: category,
     priority: priority,
     dueDate: isoDateFromToday(daysFromDueDate),
-    completed
+    completed,
   };
 }
