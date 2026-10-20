@@ -10,8 +10,8 @@ import {
   randomPriority,
 } from "../Helpers/taskDetails";
 
-test("edit task", async ({ createdTask, openApp, page, tasksPage, toolBarPage }) => {
-  const name: string = createdTask;
+test("edit task", async ({ createTask, openApp, page, tasksPage }) => {
+  const name: string = createTask;
   const singleTaskPage: SingleTaskPage = new SingleTaskPage(page, name);
   const addTaskPage: AddNewTaskPage = new AddNewTaskPage(page);
 
@@ -33,10 +33,11 @@ test("edit task", async ({ createdTask, openApp, page, tasksPage, toolBarPage })
   await editedTaskPage.expectTaskNameToBe(newName);
   await editedTaskPage.expectTaskDueDateToBe(date);
   await editedTaskPage.expectTaskPriorityToBe(priority);
+  await tasksPage.expectTasksAmountToBe(1);
 });
 
-test("delete task", async ({ createdTask, openApp, page, tasksPage, toolBarPage }) => {
-  const name: string = createdTask;
+test("delete task", async ({ createTask, openApp, page, tasksPage, toolBarPage }) => {
+  const name: string = createTask;
   const singleTaskPage: SingleTaskPage = new SingleTaskPage(page, name);
 
   await tasksPage.expectEmptyStateAlert(false);
@@ -49,15 +50,16 @@ test("delete task", async ({ createdTask, openApp, page, tasksPage, toolBarPage 
   await toolBarPage.expectTasksLeftToBe(0);
 });
 
-test("check task", async ({ createdTask, openApp, page, tasksPage, toolBarPage }) => {
-  const name: string = createdTask;
+test("check task", async ({ createTask, openApp, page, toolBarPage }) => {
+  const name: string = createTask;
   const singleTaskPage: SingleTaskPage = new SingleTaskPage(page, name);
 
   await toolBarPage.expectTasksLeftToBe(1);
+  await toolBarPage.expectTasksTotalCountToBe(1);
 
   await singleTaskPage.checkTask();
 
   await singleTaskPage.expectTaskIsChecked();
-  await tasksPage.expectTasksAmountToBe(1);
   await toolBarPage.expectTasksLeftToBe(0);
+  await toolBarPage.expectTasksTotalCountToBe(1);
 });
