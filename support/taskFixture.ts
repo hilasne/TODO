@@ -2,9 +2,10 @@ import { test as base } from "@playwright/test";
 import { TasksPage } from "../support/pages/tasksPage";
 import { ToolBarPage } from "../support/pages/toolBarPage";
 import { SingleTaskPage } from "../support/pages/singleTaskPage";
+import { FiltersPage } from "../support/pages/filtersPage";
 import { getTask, createTaskTitle, randomCategory, randomPriority } from "./Helpers/taskDetails";
 import { NewTask, TasksApi } from "./api/tasksApi";
-import { isoDateFromToday, randomNumber } from "./Helpers/testDataHelpers";
+import { randomNumber } from "./Helpers/testDataHelpers";
 
 type TestFixtures = {
   // API
@@ -13,14 +14,15 @@ type TestFixtures = {
   createTask: string;
   createTaskWithTodayDueDate: string;
   createTaskWithOverdueDueDate: string;
-  createTwoTasks: string;
-  completeTwoTasks: void;
+  createThreeTasks: [SingleTaskPage, SingleTaskPage, SingleTaskPage];
+  completeAllTasks: void;
 
   // UI
   openApp: void;
   tasksPage: TasksPage;
   toolBarPage: ToolBarPage;
   getSingleTaskPageAndName: { singleTaskPage: SingleTaskPage; singleTaskName: string };
+  filtersPage: FiltersPage;
 };
 
 export const test = base.extend<TestFixtures>({
@@ -56,14 +58,25 @@ export const test = base.extend<TestFixtures>({
     await use(overdueTask.name);
   },
 
-  createTwoTasks: async ({ tasksApi, createTask }, use) => {
-    const secondtask: NewTask = getTask(createTaskTitle(), randomCategory(), randomPriority(), randomNumber());
+  createThreeTasks: async ({ tasksApi, cleanTasks, page }, use) => {
+    const tasks = [
+      getTask("first task", "Work", "high", randomNumber(1, 100)),
+      getTask("second task", "Health", "medium", 0),
+      getTask("third task", "Personal", "low", randomNumber(-100, -1)),
+    ] as const;
 
-    await tasksApi.create(secondtask);
-    await use(secondtask.name);
+    for (const task of tasks) {
+      await tasksApi.create(task);
+    }
+
+    await use([
+      new SingleTaskPage(page, "first task"),
+      new SingleTaskPage(page, "second task"),
+      new SingleTaskPage(page, "third task"),
+    ]);
   },
 
-  completeTwoTasks: async ({ tasksApi, createTwoTasks }, use) => {
+  completeAllTasks: async ({ tasksApi, createThreeTasks }, use) => {
     await tasksApi.completeAll();
     await use();
   },
@@ -90,5 +103,10 @@ export const test = base.extend<TestFixtures>({
 
     const singleTaskPage = new SingleTaskPage(page, singleTaskName);
     await use({ singleTaskPage, singleTaskName });
+  },
+
+  filtersPage: async ({ page }, use) => {
+    const filtersPage = new FiltersPage(page);
+    await use(filtersPage);
   },
 });

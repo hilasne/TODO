@@ -10,8 +10,5 @@ export const filtersSelectors = {
   sortBySelect: "[data-test-name='sort-by']",
   sortButton: "[data-test-name='sort-order']",
 
-  ascendingAttribute: "[title='Ascending']",
-  descendingAttribute: "[title='Descending']",
-
   resetFiltersButton: "[data-test-name='reset-filters-button']",
 };

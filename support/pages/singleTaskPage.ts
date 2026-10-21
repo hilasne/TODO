@@ -1,6 +1,6 @@
 import { Locator, expect, Page } from "@playwright/test";
 import { singleTaskSelectors } from "../selectors/singleTaskSelectors";
-import { CategoryOptions, DueDateOptions, PriorityOptions } from "../Helpers/taskDetails";
+import { CategoryOptions, PriorityOptions } from "../Helpers/taskDetails";
 
 export class SingleTaskPage {
   private readonly page: Page;

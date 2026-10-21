@@ -12,11 +12,13 @@ export type NewTask = {
 export class TasksApi {
   constructor(private request: APIRequestContext) {}
 
-  async create(task: NewTask): Promise<void> {
+  async create(task: NewTask): Promise<NewTask> {
     const res: APIResponse = await this.request.post("/api/tasks", {
       data: { completed: false, ...task },
     });
     expect(res.status(), await res.text()).toBe(201);
+    
+    return task;
   }
 
   async deleteAll(): Promise<void> {

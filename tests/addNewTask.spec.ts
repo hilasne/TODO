@@ -12,6 +12,7 @@ test("add new task", async ({ openApp, page, tasksPage, toolBarPage, getSingleTa
   const addTaskPage = new AddNewTaskPage(page);
 
   await toolBarPage.clickAddTask();
+  await addTaskPage.expectTaskModalToBeVisible();
   await addTaskPage.enterTaskName(singleTaskName);
   await addTaskPage.enterDueDate(date);
   await addTaskPage.selectCategory(category);
@@ -33,12 +34,14 @@ test("cancel add new task", async ({ openApp, page, tasksPage, toolBarPage, getS
   const addTaskPage = new AddNewTaskPage(page);
 
   await toolBarPage.clickAddTask();
+  await addTaskPage.expectTaskModalToBeVisible();
   await addTaskPage.enterTaskName(singleTaskName);
   await addTaskPage.enterDueDate(date);
   await addTaskPage.selectCategory(category);
   await addTaskPage.selectPriority(priority);
   await addTaskPage.clickCancel();
 
+  await addTaskPage.expectTaskModalToBeVisible(false);
   await toolBarPage.expectTasksLeftToBe(0);
   await tasksPage.expectTasksAmountToBe(0);
   await tasksPage.expectEmptyStateAlert();
@@ -49,18 +52,21 @@ test("click close new task modal", async ({ openApp, page, tasksPage, toolBarPag
   const addTaskPage = new AddNewTaskPage(page);
 
   await toolBarPage.clickAddTask();
+  await addTaskPage.expectTaskModalToBeVisible();
+
   await addTaskPage.enterTaskName(singleTaskName);
   await addTaskPage.enterDueDate(date);
   await addTaskPage.selectCategory(category);
   await addTaskPage.selectPriority(priority);
   await addTaskPage.closeModal();
 
+  await addTaskPage.expectTaskModalToBeVisible(false);
   toolBarPage.expectTasksLeftToBe(0);
   tasksPage.expectTasksAmountToBe(0);
   tasksPage.expectEmptyStateAlert();
 });
 
-test("negative, add empty task", async ({ openApp, page, tasksPage, toolBarPage }) => {
+test("negative, add empty task", async ({ openApp, page, toolBarPage }) => {
   const addTaskPage = new AddNewTaskPage(page);
 
   await toolBarPage.clickAddTask();
@@ -69,7 +75,4 @@ test("negative, add empty task", async ({ openApp, page, tasksPage, toolBarPage 
   await addTaskPage.expectNameError();
   await addTaskPage.expectCategoryError();
   await addTaskPage.expectDueDateError();
-
-  toolBarPage.expectTasksLeftToBe(0);
-  tasksPage.expectTasksAmountToBe(0);
 });
