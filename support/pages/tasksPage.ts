@@ -23,37 +23,41 @@ export class TasksPage {
 
   // Expect Methods
 
-  async expectTasksOrderByNamesToBe(tasksNames: string[]) {
+  async expectTasksOrderByNamesToBe(tasksNames: string[]): Promise<void> {
     for (let i: number = 0; i < tasksNames.length; i++) {
       await expect(this.taskRows.nth(i).locator(singleTaskSelectors.taskName)).toHaveText(tasksNames[i]);
     }
   }
 
-  async expectTasksCategoryToBe(category: CategoryOptions) {
+  async expectTasksCategoriesToBe(categories: CategoryOptions[]): Promise<void> {
     for (let i: number = 0; i < (await this.taskRows.count()); i++) {
-      await expect(this.taskRows.nth(i).locator(singleTaskSelectors.taskCategory)).toHaveText(category);
+      await expect(this.taskRows.nth(i).locator(singleTaskSelectors.taskCategory)).toHaveText(categories[i]);
     }
   }
 
-  async expectTasksPriorityToBe(priority: PriorityOptions) {
+  async expectTasksPriorityToBe(priority: PriorityOptions): Promise<void> {
     for (let i: number = 0; i < (await this.taskRows.count()); i++) {
       await expect(this.taskRows.nth(i).locator(singleTaskSelectors.taskPriority)).toHaveText(priority);
     }
   }
 
-  async expectEmptyStateTitleToBe(hasTasks: boolean) {
-    if (hasTasks) {
-      expect(this.emptyStateTitle).toHaveText("No matching tasks");
-    } else {
-      expect(this.emptyStateTitle).toHaveText("No tasks yet");
+  async expectTasksCheckToBe(isChecked: boolean[]): Promise<void> {
+    for (let i: number = 0; i < (await this.taskRows.count()); i++) {
+      await expect(this.taskRows.nth(i).locator(singleTaskSelectors.taskCheckbox)).toBeChecked({
+        checked: isChecked[i],
+      });
     }
   }
 
-  async expectEmptyStateAlert(isVisible: boolean = true) {
+  async expectEmptyStateAlert(isVisible: boolean = true, hasTasks: boolean = false): Promise<void> {
     await expect(this.emptyStateAlert).toBeVisible({ visible: isVisible });
+
+    if (!isVisible) return;
+
+    await expect(this.emptyStateTitle).toHaveText(hasTasks ? "No matching tasks" : "No tasks yet");
   }
 
-  async expectTasksAmountToBe(expected: number) {
+  async expectTasksAmountToBe(expected: number): Promise<void> {
     await expect(this.taskRows).toHaveCount(expected);
   }
 }
