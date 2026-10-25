@@ -7,6 +7,7 @@ export class ToolBarPage {
   private readonly completeAllTasksButton: Locator;
   private readonly clearCompletedTasksButton: Locator;
   private readonly tasksLeftNumber: Locator;
+  private readonly tasksTotalCounter: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -14,6 +15,7 @@ export class ToolBarPage {
     this.completeAllTasksButton = this.page.locator(toolbarSelectors.completeAllTasksButton);
     this.clearCompletedTasksButton = this.page.locator(toolbarSelectors.clearCompletedTasksButton);
     this.tasksLeftNumber = this.page.locator(toolbarSelectors.tasksLeftCount);
+    this.tasksTotalCounter = this.page.locator(toolbarSelectors.tasksCounterTotal);
   }
 
   async clickAddTask(): Promise<void> {
@@ -34,11 +36,15 @@ export class ToolBarPage {
     await expect(this.tasksLeftNumber).toHaveText(expectedNumber.toString());
   }
 
+  async expectTasksTotalCountToBe(expectedNumber: number) {
+    await expect(this.tasksTotalCounter).toContainText(expectedNumber.toString());
+  }
+
   async expectCompleteAllButtonEnabled(isEnabled: boolean): Promise<void> {
-  await expect(this.completeAllTasksButton).toBeEnabled({ enabled: isEnabled });
-}
+    await expect(this.completeAllTasksButton).toBeEnabled({ enabled: isEnabled });
+  }
 
   async expectClearTasksButtonEnabled(isEnabled: boolean): Promise<void> {
-  await expect(this.clearCompletedTasksButton).toBeEnabled({ enabled: isEnabled });
-}
+    await expect(this.clearCompletedTasksButton).toBeEnabled({ enabled: isEnabled });
+  }
 }
