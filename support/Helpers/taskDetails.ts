@@ -27,17 +27,11 @@ export function createTaskTitle(): string {
   return `${faker.hacker.verb()} ${faker.hacker.noun()} and ${faker.hacker.noun()} for yotam`;
 }
 
-export function getTask(
-  name: string,
-  category: CategoryOptions,
-  priority: PriorityOptions,
-  daysFromDueDate: number,
-  completed: boolean = false,
-): NewTask {
+export function getTask(daysFromDueDate: number, completed: boolean = false): NewTask {
   return {
-    name: name,
-    category: category,
-    priority: priority,
+    name: createTaskTitle(),
+    category: randomCategory(),
+    priority: randomPriority(),
     dueDate: isoDateFromToday(daysFromDueDate),
     completed,
   };

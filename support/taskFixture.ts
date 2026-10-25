@@ -5,7 +5,7 @@ import { SingleTaskPage } from "../support/pages/singleTaskPage";
 import { FiltersPage } from "../support/pages/filtersPage";
 import { getTask, createTaskTitle, randomCategory, randomPriority } from "./Helpers/taskDetails";
 import { NewTask, TasksApi } from "./api/tasksApi";
-import { randomNumber } from "./Helpers/testDataHelpers";
+import { isoDateFromToday, randomNumber } from "./Helpers/testDataHelpers";
 
 type TestFixtures = {
   // API
@@ -38,32 +38,50 @@ export const test = base.extend<TestFixtures>({
   },
 
   createTask: async ({ tasksApi, cleanTasks }, use) => {
-    const task: NewTask = getTask(createTaskTitle(), randomCategory(), randomPriority(), randomNumber());
+    const task: NewTask = getTask(randomNumber());
 
     await tasksApi.create(task);
     await use(task.name);
   },
 
   createTaskWithTodayDueDate: async ({ tasksApi, cleanTasks }, use) => {
-    const todayTask: NewTask = getTask(createTaskTitle(), randomCategory(), randomPriority(), 0);
+    const todayTask: NewTask = getTask(0);
 
     await tasksApi.create(todayTask);
     await use(todayTask.name);
   },
 
   createTaskWithOverdueDueDate: async ({ tasksApi, cleanTasks }, use) => {
-    const overdueTask: NewTask = getTask(createTaskTitle(), randomCategory(), randomPriority(), -1);
+    const overdueTask: NewTask = getTask(-1);
 
     await tasksApi.create(overdueTask);
     await use(overdueTask.name);
   },
 
   createThreeTasks: async ({ tasksApi, cleanTasks, page }, use) => {
-    const tasks = [
-      getTask("first task", "Work", "high", randomNumber(1, 100)),
-      getTask("second task", "Health", "medium", 0),
-      getTask("third task", "Personal", "low", randomNumber(-100, -1)),
-    ] as const;
+    const tasks: NewTask[] = [
+      {
+        name: "first task",
+        category: "Work",
+        priority: "high",
+        dueDate: isoDateFromToday(4),
+        completed: false,
+      },
+      {
+        name: "second task",
+        category: "Health",
+        priority: "medium",
+        dueDate: isoDateFromToday(0),
+        completed: false,
+      },
+      {
+        name: "third task",
+        category: "Personal",
+        priority: "low",
+        dueDate: isoDateFromToday(-3),
+        completed: false,
+      },
+    ];
 
     for (const task of tasks) {
       await tasksApi.create(task);

@@ -17,7 +17,7 @@ export class TasksApi {
       data: { completed: false, ...task },
     });
     expect(res.status(), await res.text()).toBe(201);
-    
+
     return task;
   }
 
