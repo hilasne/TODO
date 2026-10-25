@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { NewTask } from "../api/tasksApi";
-import { isoDateFromToday } from "./testDataHelpers";
+import { isoDateFromToday, randomNumber } from "./testDataHelpers";
 
 export const CATEGORIES = ["Work", "Personal", "Shopping", "Health", "Finance"] as const;
 export const PRIORITIES = ["low", "medium", "high"] as const;
@@ -27,12 +27,12 @@ export function createTaskTitle(): string {
   return `${faker.hacker.verb()} ${faker.hacker.noun()} and ${faker.hacker.noun()} for yotam`;
 }
 
-export function getTask(daysFromDueDate: number, completed: boolean = false): NewTask {
+export function getTask(daysFromDueDate?: number): NewTask {
   return {
     name: createTaskTitle(),
     category: randomCategory(),
     priority: randomPriority(),
-    dueDate: isoDateFromToday(daysFromDueDate),
-    completed,
+    dueDate: isoDateFromToday(daysFromDueDate ?? randomNumber()),
+    completed: false,
   };
 }

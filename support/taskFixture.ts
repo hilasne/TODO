@@ -8,12 +8,13 @@ import { NewTask, TasksApi } from "./api/tasksApi";
 import { isoDateFromToday, randomNumber } from "./Helpers/testDataHelpers";
 
 type TestFixtures = {
+  // Option
+  createdTaskDaysFromDueDate: number | null;
+
   // API
   tasksApi: TasksApi;
   cleanTasks: void;
   createTask: string;
-  createTaskWithTodayDueDate: string;
-  createTaskWithOverdueDueDate: string;
   createThreeTasks: [SingleTaskPage, SingleTaskPage, SingleTaskPage];
   completeAllTasks: void;
 
@@ -26,6 +27,9 @@ type TestFixtures = {
 };
 
 export const test = base.extend<TestFixtures>({
+  // Options
+  createdTaskDaysFromDueDate: [null, { option: true }],
+
   // API fixtures
 
   tasksApi: async ({ request }, use) => {
@@ -37,25 +41,11 @@ export const test = base.extend<TestFixtures>({
     await use();
   },
 
-  createTask: async ({ tasksApi, cleanTasks }, use) => {
-    const task: NewTask = getTask(randomNumber());
+  createTask: async ({ createdTaskDaysFromDueDate, tasksApi, cleanTasks }, use) => {
+    const task: NewTask = getTask(createdTaskDaysFromDueDate ?? randomNumber());
 
     await tasksApi.create(task);
     await use(task.name);
-  },
-
-  createTaskWithTodayDueDate: async ({ tasksApi, cleanTasks }, use) => {
-    const todayTask: NewTask = getTask(0);
-
-    await tasksApi.create(todayTask);
-    await use(todayTask.name);
-  },
-
-  createTaskWithOverdueDueDate: async ({ tasksApi, cleanTasks }, use) => {
-    const overdueTask: NewTask = getTask(-1);
-
-    await tasksApi.create(overdueTask);
-    await use(overdueTask.name);
   },
 
   createThreeTasks: async ({ tasksApi, cleanTasks, page }, use) => {
@@ -65,21 +55,18 @@ export const test = base.extend<TestFixtures>({
         category: "Work",
         priority: "high",
         dueDate: isoDateFromToday(4),
-        completed: false,
       },
       {
         name: "second task",
         category: "Health",
         priority: "medium",
         dueDate: isoDateFromToday(0),
-        completed: false,
       },
       {
         name: "third task",
         category: "Personal",
         priority: "low",
         dueDate: isoDateFromToday(-3),
-        completed: false,
       },
     ];
 
