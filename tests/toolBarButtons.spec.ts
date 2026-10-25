@@ -19,6 +19,7 @@ test("clear all tasks", async ({ createThreeTasks, completeAllTasks, openApp, ta
   await toolBarPage.clickClearCompletedTasks();
 
   await toolBarPage.expectClearTasksButtonEnabled(false);
+  await tasksPage.expectEmptyStateAlert();
   await toolBarPage.expectTasksLeftToBe(0);
   await toolBarPage.expectTasksTotalCountToBe(0);
 });

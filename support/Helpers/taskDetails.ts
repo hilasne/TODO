@@ -24,7 +24,7 @@ export function randomPriority() {
 }
 
 export function createTaskTitle(): string {
-  return `${faker.hacker.verb()} ${faker.hacker.noun()} for yotam`;
+  return `${faker.hacker.verb()} ${faker.hacker.noun()} and ${faker.hacker.noun()} for yotam`;
 }
 
 export function getTask(

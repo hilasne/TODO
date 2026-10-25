@@ -61,9 +61,9 @@ test("click close new task modal", async ({ openApp, page, tasksPage, toolBarPag
   await addTaskPage.closeModal();
 
   await addTaskPage.expectTaskModalToBeVisible(false);
-  toolBarPage.expectTasksLeftToBe(0);
-  tasksPage.expectTasksAmountToBe(0);
-  tasksPage.expectEmptyStateAlert();
+  await toolBarPage.expectTasksLeftToBe(0);
+  await tasksPage.expectTasksAmountToBe(0);
+  await tasksPage.expectEmptyStateAlert();
 });
 
 test("negative, add empty task", async ({ openApp, page, toolBarPage }) => {

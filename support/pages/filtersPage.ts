@@ -70,7 +70,7 @@ export class FiltersPage {
   // Expect Methods
 
   async expectResetFiltersToBeVisible(visible: boolean = true) {
-    expect(this.resetFilters).toBeVisible({ visible });
+    await expect(this.resetFilters).toBeVisible({ visible });
   }
 
   async expectDescOrAsc(order: SortOrderOptions) {
