@@ -1,6 +1,7 @@
 import { Locator, expect, Page } from "@playwright/test";
 import { singleTaskSelectors } from "../selectors/singleTaskSelectors";
 import { CategoryOptions, PriorityOptions } from "../Helpers/taskDetails";
+import { formatDateForValidation } from "../Helpers/testDataHelpers";
 
 export class SingleTaskPage {
   private readonly page: Page;
@@ -45,16 +46,6 @@ export class SingleTaskPage {
     await this.deleteTaskButton.click();
   }
 
-  private formatDueDate(date: string): string {
-    const [year, month, day] = date.split("-").map(Number);
-
-    return new Date(year, month - 1, day).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  }
-
   // Expect Methods
 
   async expectTaskNameToBe(expectedName: string) {
@@ -69,11 +60,11 @@ export class SingleTaskPage {
     await expect(this.taskPriority).toHaveText(expectedPriority);
   }
 
-  async expectTaskDueDateToBe(expectedDueDate: string) {
+  async expectTaskDueDateToBe(expectedDueDate: "Today" | "Overdue" | Date) {
     if (expectedDueDate === "Today" || expectedDueDate === "Overdue") {
       await expect(this.taskDueDate).toContainText(expectedDueDate);
     } else {
-      await expect(this.taskDueDate).toContainText(this.formatDueDate(expectedDueDate));
+      await expect(this.taskDueDate).toContainText(formatDateForValidation(expectedDueDate));
     }
   }
 

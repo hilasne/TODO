@@ -1,11 +1,12 @@
 import { APIRequestContext, APIResponse, expect } from "@playwright/test";
 import { CategoryOptions, PriorityOptions } from "../Helpers/taskDetails";
+import { formatDateForNewTask } from "../Helpers/testDataHelpers";
 
 export type NewTask = {
   name: string;
   category: CategoryOptions;
   priority: PriorityOptions;
-  dueDate: string;
+  dueDate: Date;
   completed?: boolean;
 };
 
@@ -14,8 +15,15 @@ export class TasksApi {
 
   async create(task: NewTask): Promise<NewTask> {
     const res: APIResponse = await this.request.post("/api/tasks", {
-      data: { completed: false, ...task },
+      data: {
+        name: task.name,
+        category: task.category,
+        priority: task.priority,
+        dueDate: formatDateForNewTask(task.dueDate),
+        completed: task.completed ?? false,
+      },
     });
+
     expect(res.status(), await res.text()).toBe(201);
 
     return task;

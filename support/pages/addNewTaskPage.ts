@@ -1,6 +1,7 @@
 import { Locator, Page, expect } from "@playwright/test";
 import { addNewTaskSelectors } from "../selectors/addNewTaskSelectors";
 import { CategoryOptions, PriorityOptions } from "../Helpers/taskDetails";
+import { formatDateForNewTask } from "../Helpers/testDataHelpers";
 
 export class AddNewTaskPage {
   private readonly page: Page;
@@ -44,8 +45,8 @@ export class AddNewTaskPage {
     await this.prioritySelect.selectOption({ value: priority });
   }
 
-  async enterDueDate(dueDate: string) {
-    await this.dueDateInput.fill(dueDate);
+  async enterDueDate(dueDate: Date) {
+    await this.dueDateInput.fill(formatDateForNewTask(dueDate));
   }
 
   async clickSave() {

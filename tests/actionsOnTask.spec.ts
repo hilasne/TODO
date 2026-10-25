@@ -16,7 +16,7 @@ test("edit task", async ({ createTask, openApp, page, tasksPage }) => {
   const addTaskPage: AddNewTaskPage = new AddNewTaskPage(page);
 
   const newName: string = createTaskTitle();
-  const date: string = isoDateFromToday(randomNumber());
+  const date: Date = isoDateFromToday(randomNumber());
   const category: CategoryOptions = randomCategory();
   const priority: PriorityOptions = randomPriority();
 

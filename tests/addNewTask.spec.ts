@@ -3,7 +3,7 @@ import { AddNewTaskPage } from "../support/pages/addNewTaskPage";
 import { randomNumber, isoDateFromToday } from "../support/Helpers/testDataHelpers";
 import { CategoryOptions, PriorityOptions, randomCategory, randomPriority } from "../support/Helpers/taskDetails";
 
-const date: string = isoDateFromToday(randomNumber());
+const date: Date = isoDateFromToday(randomNumber());
 const category: CategoryOptions = randomCategory();
 const priority: PriorityOptions = randomPriority();
 
