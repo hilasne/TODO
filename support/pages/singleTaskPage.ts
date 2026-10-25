@@ -4,6 +4,7 @@ import { CategoryOptions, PriorityOptions } from "../Helpers/taskDetails";
 
 export class SingleTaskPage {
   private readonly page: Page;
+  private readonly name: string;
   private readonly singleTask: Locator;
   private readonly taskName: Locator;
   private readonly taskCategory: Locator;
@@ -15,6 +16,7 @@ export class SingleTaskPage {
 
   constructor(page: Page, name: string) {
     this.page = page;
+    this.name = name;
     this.singleTask = this.page.locator(singleTaskSelectors.singleTask).filter({
       has: this.page.locator(singleTaskSelectors.taskName, { hasText: name }),
     });
@@ -25,6 +27,10 @@ export class SingleTaskPage {
     this.taskCheckbox = this.singleTask.locator(singleTaskSelectors.taskCheckbox);
     this.editTaskButton = this.singleTask.locator(singleTaskSelectors.editTaskButton);
     this.deleteTaskButton = this.singleTask.locator(singleTaskSelectors.deleteTaskButton);
+  }
+
+  getTaskName(): string {
+    return this.name;
   }
 
   async checkTask() {
