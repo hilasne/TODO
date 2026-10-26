@@ -4,7 +4,7 @@ import { SingleTaskPage } from "../support/pages/singleTaskPage";
 import { randomNumber, isoDateFromToday } from "../support/Helpers/testDataHelpers";
 import {
   CategoryOptions,
-  createTaskTitle,
+  randomTaskTitle,
   PriorityOptions,
   randomCategory,
   randomPriority,
@@ -15,7 +15,7 @@ test("edit task", async ({ createTask, openApp, page, tasksPage }) => {
   const singleTaskPage: SingleTaskPage = new SingleTaskPage(page, name);
   const addTaskPage: AddNewTaskPage = new AddNewTaskPage(page);
 
-  const newName: string = createTaskTitle();
+  const newName: string = randomTaskTitle();
   const date: Date = isoDateFromToday(randomNumber());
   const category: CategoryOptions = randomCategory();
   const priority: PriorityOptions = randomPriority();

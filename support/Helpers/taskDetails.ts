@@ -10,7 +10,7 @@ export type CategoryOptions = (typeof CATEGORIES)[number];
 export type PriorityOptions = (typeof PRIORITIES)[number];
 
 // TASK FILTERS TYPES
-export type FilterStatusOptions = "All" | "Active" | "Completed";
+export type FilterStatusOptions = "all" | "active" | "completed";
 export type SortByOptions = "dueDate" | "name";
 export type SortOrderOptions = "asc" | "desc";
 
@@ -23,13 +23,13 @@ export function randomPriority() {
   return faker.helpers.arrayElement(PRIORITIES);
 }
 
-export function createTaskTitle(): string {
+export function randomTaskTitle(): string {
   return `${faker.hacker.verb()} ${faker.hacker.noun()} and ${faker.hacker.noun()} for yotam`;
 }
 
 export function getTask(daysFromDueDate?: number): NewTask {
   return {
-    name: createTaskTitle(),
+    name: randomTaskTitle(),
     category: randomCategory(),
     priority: randomPriority(),
     dueDate: isoDateFromToday(daysFromDueDate ?? randomNumber()),

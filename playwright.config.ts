@@ -1,4 +1,5 @@
 import { defineConfig } from "@playwright/test";
+import { env } from "./config/env";
 
 export default defineConfig({
   fullyParallel: true,
@@ -7,29 +8,22 @@ export default defineConfig({
   testDir: "./tests",
   reporter: "html",
 
-  // Maximum time a single test can run before timing out
   timeout: 50 * 1000,
   expect: {
-    // Maximum time for expect() assertions to pass
     timeout: 10 * 1000,
   },
 
   use: {
-    // Maximum time for actions like click(), fill(), check()
     actionTimeout: 10 * 1000,
-    // Maximum time for navigation like goto(), goBack()
     navigationTimeout: 30 * 1000,
-
-    baseURL: "http://localhost:3000",
+    baseURL: env.BASE_URL,
     extraHTTPHeaders: { Accept: 'application/json' },
-
-    headless: false,
+    headless: true,
     viewport: null,
     launchOptions: {
       args: [""],
     },
     ignoreHTTPSErrors: true,
-
     screenshot: "off",
     video: "off",
     trace: "on",

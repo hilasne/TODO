@@ -3,7 +3,7 @@ import { TasksPage } from "../support/pages/tasksPage";
 import { ToolBarPage } from "../support/pages/toolBarPage";
 import { SingleTaskPage } from "../support/pages/singleTaskPage";
 import { FiltersPage } from "../support/pages/filtersPage";
-import { getTask, createTaskTitle, randomCategory, randomPriority } from "./Helpers/taskDetails";
+import { getTask, randomTaskTitle } from "./Helpers/taskDetails";
 import { NewTask, TasksApi } from "./api/tasksApi";
 import { isoDateFromToday, randomNumber } from "./Helpers/testDataHelpers";
 
@@ -104,7 +104,7 @@ export const test = base.extend<TestFixtures>({
   },
 
   getSingleTaskPageAndName: async ({ page }, use) => {
-    const singleTaskName = createTaskTitle();
+    const singleTaskName = randomTaskTitle();
 
     const singleTaskPage = new SingleTaskPage(page, singleTaskName);
     await use({ singleTaskPage, singleTaskName });
