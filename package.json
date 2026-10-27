@@ -12,26 +12,19 @@
     "test:ui": "npx playwright test --ui",
     "test:file": "npx playwright test tests/example.spec.ts",
     "test:parallel": "npx playwright test --workers=4",
-    "test:serial": "npx playwright test --workers=1"
+    "test:serial": "npx playwright test --workers=1",
+    "typecheck": "npx tsc --noEmit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@eslint/js": "^9.32.0",
+    "@faker-js/faker": "^10.6.0",
     "@playwright/test": "^1.54.1",
-    "@types/axios": "^0.14.4",
     "@types/node": "^24.0.14",
-    "chai": "^6.2.2",
-    "eslint": "^9.32.0",
-    "eslint-plugin-react": "^7.37.5",
-    "globals": "^16.3.0",
-    "jiti": "^2.5.1",
-    "mocha": "^11.7.6",
-    "typescript-eslint": "^8.38.0"
-  },
-  "dependencies": {
-    "axios": "^1.11.0",
-    "selenium-webdriver": "^4.46.0"
+    "dotenv": "^18.0.9",
+    "openapi-typescript": "^7.13.0",
+    "prettier": "^3.9.10",
+    "zod": "^4.6.7"
   }
 }
