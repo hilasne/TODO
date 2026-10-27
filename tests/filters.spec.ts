@@ -4,7 +4,7 @@ import { TasksPage } from "../support/pages/tasksPage";
 test("reset filters", async ({ createTask, openApp, filtersPage }) => {
   await filtersPage.selectCategory("Finance");
   await filtersPage.selectPriority("high");
-  await filtersPage.filterByStatus("Active");
+  await filtersPage.filterByStatus("active");
   await filtersPage.sortBy("name");
   await filtersPage.clickDescAscButton();
 
@@ -41,7 +41,7 @@ test("filter all tasks", async ({ createThreeTasks, openApp, page, filtersPage }
 
   await tasksPage.expectTasksCheckToBe([false, false, false]);
 
-  await filtersPage.filterByStatus("All");
+  await filtersPage.filterByStatus("all");
 
   await tasksPage.expectTasksAmountToBe(3);
   await tasksPage.expectTasksCategoriesToBe(["Personal", "Health", "Work"]);
@@ -57,7 +57,7 @@ test("filter active tasks", async ({ createThreeTasks, completeAllTasks, openApp
 
   await tasksPage.expectTasksCheckToBe([true, true, true]);
 
-  await filtersPage.filterByStatus("Active");
+  await filtersPage.filterByStatus("active");
 
   await filtersPage.expectResetFiltersToBeVisible();
   await tasksPage.expectTasksAmountToBe(0);
@@ -69,7 +69,7 @@ test("filter completed tasks", async ({ createThreeTasks, completeAllTasks, open
 
   await tasksPage.expectTasksCheckToBe([true, true, true]);
 
-  await filtersPage.filterByStatus("Completed");
+  await filtersPage.filterByStatus("completed");
 
   await filtersPage.expectResetFiltersToBeVisible();
   await tasksPage.expectTasksAmountToBe(3);

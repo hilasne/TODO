@@ -41,13 +41,13 @@ export class FiltersPage {
 
   async filterByStatus(status: FilterStatusOptions) {
     switch (status) {
-      case "Active":
+      case "active":
         await this.statusActiveTasksButton.click();
         break;
-      case "All":
+      case "all":
         await this.statusAllTasksButton.click();
         break;
-      case "Completed":
+      case "completed":
         await this.statusCompletedTasksButton.click();
         break;
       default:
